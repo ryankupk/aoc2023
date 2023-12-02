@@ -54,4 +54,4 @@ def main(input_filename: str):
     part_two(inp)
 
 if __name__ == "__main__":
-    main("D:\\AOC 2023\\day2\\input.txt")
+    main("input.txt")
