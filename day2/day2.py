@@ -1,4 +1,5 @@
 import re
+import math
 
 COLOR_MAXES = {
     'red': 12,
@@ -6,19 +7,19 @@ COLOR_MAXES = {
     'blue': 14
 }
 
-def parse_input(filename: str):
-    return open(filename, "r").read().splitlines()
+def parse_input(filename: str) -> list[tuple[str, str]]:
+    # list of tuples of the form ("<game ID>", "<#> <color>, <#> <color>; <#> <color> ...")
+    return [re.search(r"Game (\d+): (.*)", string).groups() for string in open(filename, "r").read().splitlines()]
 
-def part_one(strings: list):
+def part_one(games: list[tuple[str, str]]) -> None:
     possible_ids = []
-    for string in strings:
+    for game in games:
         impossible = False
-        id, sets = re.search("Game (\d+): (.*)", string).groups()
+        id, sets = game
         for set in sets.split(';'):
             for counts in set.split(','):
                 count, color = counts.strip().split(' ')
-                if int(count) > COLOR_MAXES[color]:
-                    impossible = True
+                if int(count) > COLOR_MAXES[color]: impossible = True
             
         if not impossible: possible_ids.append(int(id))
         
@@ -26,24 +27,21 @@ def part_one(strings: list):
                     
         
  
-def part_two(strings: list):
+def part_two(games: list[tuple[str, str]]) -> None:
     total_power = 0
-    for string in strings:
+    for game in games:
         mins = {
             'red' : float('-inf'),
             'green' : float('-inf'),
             'blue' : float('-inf')
         }
-        _, sets = re.search("Game (\d+): (.*)", string).groups()
+        _, sets = game
         for set in sets.split(';'):
             for counts in set.split(','):
                 count, color = counts.strip().split(' ')
                 mins[color] = int(count) if int(count) > mins[color] else mins[color]
                 
-        cur_power = 1
-        for power in mins.values():
-            cur_power *= power
-        total_power += cur_power
+        total_power += math.prod(mins.values())
         
     print(total_power)
                 
