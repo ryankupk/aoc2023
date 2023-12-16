@@ -1,62 +1,21 @@
 import re
+from multiprocessing import Pool
 
-def parse_input(filename: str):
+def parse_input(filename: str) -> list[list[list[int]]]:
     seeds = None
-    seed_soil_map_data = []
-    soil_fertilizer_map_data = []
-    fertilizer_water_map_data = []
-    water_light_map_data = []
-    light_temperature_map_data = []
-    temperature_humidity_map_data = []
-    humidity_location_map_data = []
+    groups = None
+    maps = []
     with open(filename, "r") as f:
-        # lines = f.read().splitlines()
-        seeds = list(map(int, re.search("seeds: (.*)", f.readline()).groups()[0].split(' ')))
-        f.readline(); f.readline()
-        # idx = 3 # read from start of seed-to-soil map
-        while line := f.readline():
-            if line != '\n':
-                seed_soil_map_data.append(list(map(int, line.strip().split(' '))))
-            else: break
+        seeds = list(map(int, re.search(r"seeds: (.*)", f.readline()).groups()[0].split(' ')))
         f.readline()
-        
-        while line := f.readline():
-            if line != '\n':
-                soil_fertilizer_map_data.append(list(map(int, line.strip().split(' '))))
-            else: break
-        f.readline()
-        
-        while line := f.readline():
-            if line != '\n':
-                fertilizer_water_map_data.append(list(map(int, line.strip().split(' '))))
-            else: break
-        f.readline()
-        
-        while line := f.readline():
-            if line != '\n':
-                water_light_map_data.append(list(map(int, line.strip().split(' '))))
-            else: break
-        f.readline()
-        
-        while line := f.readline():
-            if line != '\n':
-                light_temperature_map_data.append(list(map(int, line.strip().split(' '))))
-            else: break
-        f.readline()
-        
-        while line := f.readline():
-            if line != '\n':
-                temperature_humidity_map_data.append(list(map(int, line.strip().split(' '))))
-            else: break
-        f.readline()
-        
-        while line := f.readline():
-            if line != '\n':
-                humidity_location_map_data.append(list(map(int, line.strip().split(' '))))
-            else: break
-        f.readline()
+        groups = [group.split('\n') for group in f.read().split('\n\n')]
+    for group in groups:
+        cur_map = []
+        for line in group[1:]: # skip name of map
+            cur_map.append(list(map(int, line.strip().split(' '))))
             
-    return (seeds, seed_soil_map_data, soil_fertilizer_map_data, fertilizer_water_map_data, water_light_map_data, light_temperature_map_data, temperature_humidity_map_data, humidity_location_map_data)
+        maps.append(cur_map)
+    return seeds, maps
 
 
 def bounds_check(map_data, item):
@@ -66,30 +25,31 @@ def bounds_check(map_data, item):
     else:
         return item
 
-def get_location(seed: int, seed_soil_map_data, soil_fertilizer_map_data, fertilizer_water_map_data, water_light_map_data, light_temperature_map_data, temperature_humidity_map_data, humidity_location_map_data):
-    soil = bounds_check(seed_soil_map_data, seed)
-    fert = bounds_check(soil_fertilizer_map_data, soil)
-    water = bounds_check(fertilizer_water_map_data, fert)
-    light = bounds_check(water_light_map_data, water)
-    temp = bounds_check(light_temperature_map_data, light)
-    humid = bounds_check(temperature_humidity_map_data, temp)
-    location = bounds_check(humidity_location_map_data, humid)
+def get_location(seed: int, maps: list[list[list[int]]]):
+    
+    soil = bounds_check(maps[0], seed)
+    fert = bounds_check(maps[1], soil)
+    water = bounds_check(maps[2], fert)
+    light = bounds_check(maps[3], water)
+    temp = bounds_check(maps[4], light)
+    humid = bounds_check(maps[5], temp)
+    location = bounds_check(maps[6], humid)
     return location
 
-def part_one(seeds, seed_soil_map_data, soil_fertilizer_map_data, fertilizer_water_map_data, water_light_map_data, light_temperature_map_data, temperature_humidity_map_data, humidity_location_map_data):
+def part_one(seeds: list[int], maps: list[list[list[int]]]):
     locations = []
     
     for seed in seeds:
-        locations.append(get_location(seed, seed_soil_map_data, soil_fertilizer_map_data, fertilizer_water_map_data, water_light_map_data, light_temperature_map_data, temperature_humidity_map_data, humidity_location_map_data))
+        locations.append(get_location(seed, maps))
     
     print(min(locations))
  
-def part_two(seeds, seed_soil_map_data, soil_fertilizer_map_data, fertilizer_water_map_data, water_light_map_data, light_temperature_map_data, temperature_humidity_map_data, humidity_location_map_data):
+def part_two(seeds, maps):
     min_location = float('inf')
     for idx, seed in enumerate(seeds):
         if idx % 2 == 1: continue
         for seed in range(seed, seed + seeds[idx+1]):
-            cur_location = get_location(seed, seed_soil_map_data, soil_fertilizer_map_data, fertilizer_water_map_data, water_light_map_data, light_temperature_map_data, temperature_humidity_map_data, humidity_location_map_data)
+            cur_location = get_location(seed, maps)
             min_location = min(min_location, cur_location)
         print(f"completed iteration {idx}")
         
@@ -97,9 +57,9 @@ def part_two(seeds, seed_soil_map_data, soil_fertilizer_map_data, fertilizer_wat
     print(min_location)
 
 def main(input_filename: str):
-    inp = parse_input(input_filename)
-    part_one(*inp)
-    part_two(*inp)
+    seeds, maps = parse_input(input_filename)
+    part_one(seeds, maps)
+    part_two(seeds, maps)
 
 if __name__ == "__main__":
-    main("input.txt")
+    main("sample.txt")
