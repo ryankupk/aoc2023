@@ -1,16 +1,14 @@
 import re
 from collections import defaultdict
 
-def parse_input(filename: str):
-    return open(filename, 'r').read().splitlines()
+def parse_input(filename: str) -> list[tuple[str, str]]:
+    return [re.search(r"Card\s+(\d+): (.*)", string).groups() for string in open(filename, 'r').read().splitlines()]
 
-def part_one(strings: list):
+def part_one(cards: list[tuple[str, str]]) -> None:
     total_points = 0
-    for string in strings:
-        numbers: tuple[str] = re.search('Card\s+\d+: (.*)', string).groups()
-        winning, yours = numbers[0].split('|')
-        winning = set(winning.split(' '))
-        yours = set(yours.split(' '))
+    for card in cards:
+        _, numbers = card
+        winning, yours = [set(piece.split(' ')) for piece in numbers.split('|')]
         
         power = len(winning.intersection(yours))
         card_points = 2 ** (power - 2) if power > 1 else 0
@@ -18,19 +16,16 @@ def part_one(strings: list):
         
     print(total_points)
  
-def part_two(strings: list):
+def part_two(cards: list[tuple[str, str]]) -> None:
     card_counts = defaultdict(int)
-    for string in strings:
-        idx, numbers = re.search('Card\s+(\d+): (.*)', string).groups()
-        idx = int(idx)
+    for card in cards:
+        idx, numbers = int(card[0]), card[1]
         card_counts[idx] += 1
-        winning, yours = numbers.split('|')
-        winning = set(winning.split(' '))
-        yours = set(yours.split(' '))
+        winning, yours = [set(piece.split(' ')) for piece in numbers.split('|')]
         
         wins = len(winning.intersection(yours))
-        for card in range(idx+1, idx + wins):
-            card_counts[card] += (1 * card_counts[idx])
+        for current_card in range(idx+1, idx + wins):
+            card_counts[current_card] += (card_counts[idx])
             
     print(sum(card_counts.values()))
             
