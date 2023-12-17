@@ -1,15 +1,15 @@
 import re
 
-def parse_input(filename: str):
+def parse_input(filename: str) -> tuple[list[int], list[int]]:
     with open(filename, "r") as f:
-        times = list(map(int, re.search('Time:\s*(.*)', f.readline()).groups()[0].split()))
-        distances = list(map(int, re.search('Distance:\s*(.*)', f.readline()).groups()[0].split()))
+        times = list(map(int, re.search(r'Time:\s*(.*)', f.readline()).groups()[0].split()))
+        distances = list(map(int, re.search(r'Distance:\s*(.*)', f.readline()).groups()[0].split()))
     return times, distances
 
-def calculate_distance(time_held, total_time):
+def calculate_distance(time_held: int, total_time: int) -> int:
     return (total_time - time_held) * time_held
 
-def part_one(times, distances_to_beat):
+def part_one(times: list[int], distances_to_beat: list[int]) -> None:
     margin_of_error = 1
     for time, distance_to_beat in zip(times, distances_to_beat):
         ways_to_win = 0
@@ -20,7 +20,7 @@ def part_one(times, distances_to_beat):
     print(margin_of_error)
     
  
-def part_two(times, distances_to_beat):
+def part_two(times: list[int], distances_to_beat: list[int]) -> None:
     time = int(''.join(list(map(str, times))))
     distance_to_beat = int(''.join(list(map(str, distances_to_beat))))
     ways_to_win = 0
