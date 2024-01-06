@@ -18,8 +18,7 @@ def part_one(strings: list[str]) -> None:
         total_values += calculate_hash(string)
     print(total_values)
 
-def remove_lens(box: int, label: str, boxes: dict[int, list[list[Union[int, str]]]]) \
-    -> tuple[dict[int, list[list[Union[int, str]]]], int]:
+def remove_lens(box: int, label: str, boxes: dict[int, list[list[Union[int, str]]]]) -> tuple[dict[int, list[list[Union[int, str]]]], int]:
     for idx, lens in enumerate(boxes[box]):
         if label in lens:
             boxes[box].remove(lens)
@@ -27,8 +26,7 @@ def remove_lens(box: int, label: str, boxes: dict[int, list[list[Union[int, str]
     
     return boxes, -1
 
-def add_lens(box: int, label: str, lens: int, boxes: dict[int, list[list[Union[int, str]]]]) \
-    -> dict[int, list[list[Union[int, str]]]]:
+def add_lens(box: int, label: str, lens: int, boxes: dict[int, list[list[Union[int, str]]]]) -> dict[int, list[list[Union[int, str]]]]:
     boxes, idx = remove_lens(box, label, boxes)
     if idx == -1:
         boxes[box].append([label, lens])
