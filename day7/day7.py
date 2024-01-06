@@ -16,7 +16,6 @@ STRENGTHS = {
     'A': 14
 }
 
-
 def parse_input(filename: str):
     return open(filename, "r").read().splitlines()
 
@@ -48,10 +47,10 @@ def higher_rank(lhand: str, rhand: str, joker: bool) -> bool:
     if max_lhand_count == max_rhand_count == 3:
         if min(lhand_count.values()) > min(rhand_count.values()):
             return True
-        elif min(lhand_count.values()) == min(rhand_count.values()):
-            pass
-        else:
+        elif min(lhand_count.values()) < min(rhand_count.values()):
             return False
+        # there is an implicit third condition to do nothing if these counts are equal
+        # therefore we cannot return min(lhand_count.values()) > min(rhand_count.values())
     
     # check two pair
     if max_lhand_count == max_rhand_count == 2:
@@ -70,47 +69,32 @@ def higher_rank(lhand: str, rhand: str, joker: bool) -> bool:
             return True
     else: return False
     
-    
-def part_one(strings: list):
+def calculate_winnings(strings: list[str], joker: bool) -> int:
     hands_bids = {}
     ordered_hands = []
     for string in strings:
         cur_hand, bid = string.split(' ')
         hands_bids[cur_hand] = int(bid)
         for idx, existing_hand in enumerate(ordered_hands):
-            if (higher_rank(cur_hand, existing_hand, False)):
+            if (higher_rank(cur_hand, existing_hand, joker)):
                 ordered_hands.insert(idx, cur_hand)
                 break
         else:
             ordered_hands.append(cur_hand)
-    
     total_winnings = 0
     total_len = len(ordered_hands)
     for idx, hand in enumerate(ordered_hands):
         rank = total_len - idx
         total_winnings += hands_bids[hand] * rank
+        
+    return total_winnings
     
+def part_one(strings: list[str]) -> None:
+    total_winnings = calculate_winnings(strings, False)
     print(total_winnings)
  
-def part_two(strings: list):
-    hands_bids = {}
-    ordered_hands = []
-    for string in strings:
-        cur_hand, bid = string.split(' ')
-        hands_bids[cur_hand] = int(bid)
-        for idx, existing_hand in enumerate(ordered_hands):
-            if (higher_rank(cur_hand, existing_hand, True)):
-                ordered_hands.insert(idx, cur_hand)
-                break
-        else:
-            ordered_hands.append(cur_hand)
-    
-    total_winnings = 0
-    total_len = len(ordered_hands)
-    for idx, hand in enumerate(ordered_hands):
-        rank = total_len - idx
-        total_winnings += hands_bids[hand] * rank
-    
+def part_two(strings: list[str]) -> None:
+    total_winnings = calculate_winnings(strings, True)
     print(total_winnings)
 
 def main(input_filename: str):
