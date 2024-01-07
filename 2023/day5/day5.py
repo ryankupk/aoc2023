@@ -1,5 +1,6 @@
 import re
 import multiprocessing
+import functools
 
 maps: list[list[list[int]]] = []
 
@@ -16,7 +17,7 @@ def parse_input(filename: str) -> list[int]:
     return seeds
 
 
-def bounds_check(map_data: list[list[int]], item: int) -> int:
+def bounds_check(item: int, map_data: list[list[int]]) -> int:
     for dest, source, length in map_data:
         if source <= item < source + length:
             return dest + (item - source)
@@ -24,14 +25,7 @@ def bounds_check(map_data: list[list[int]], item: int) -> int:
         return item
 
 def get_location(seed: int) -> int:
-    soil = bounds_check(maps[0], seed)
-    fert = bounds_check(maps[1], soil)
-    water = bounds_check(maps[2], fert)
-    light = bounds_check(maps[3], water)
-    temp = bounds_check(maps[4], light)
-    humid = bounds_check(maps[5], temp)
-    location = bounds_check(maps[6], humid)
-    return location
+    return functools.reduce(bounds_check, maps, seed)
 
 def get_min_location_for_seed_range(seeds: tuple[int, int]) -> int:
     min_location = float('inf')
