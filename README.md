@@ -52,4 +52,40 @@ Tiles below from https://github.com/LiquidFun/aoc_tiles
 <a href="2023/day15/day15.py">
   <img src=".aoc_tiles/tiles/2023/15.png" width="161px">
 </a>
+<h1 align="center">
+  2022 - 20 ⭐
+</h1>
+<a href="2022/day1/day1_reindeer.js">
+  <img src=".aoc_tiles/tiles/2022/01.png" width="161px">
+</a>
+<a href="2022/day2/day2_rps.py">
+  <img src=".aoc_tiles/tiles/2022/02.png" width="161px">
+</a>
+<a href="2022/day3/day3_ruck.py">
+  <img src=".aoc_tiles/tiles/2022/03.png" width="161px">
+</a>
+<a href="2022/day4/day4_assignments.py">
+  <img src=".aoc_tiles/tiles/2022/04.png" width="161px">
+</a>
+<a href="2022/day5/day5_crates.py">
+  <img src=".aoc_tiles/tiles/2022/05.png" width="161px">
+</a>
+<a href="2022/day6/day6_message.js">
+  <img src=".aoc_tiles/tiles/2022/06.png" width="161px">
+</a>
+<a href="2022/day7/day7_dirs.py">
+  <img src=".aoc_tiles/tiles/2022/07.png" width="161px">
+</a>
+<a href="2022/day8/day8_trees.py">
+  <img src=".aoc_tiles/tiles/2022/08.png" width="161px">
+</a>
+<a href="2022/day9/day9_rope.py">
+  <img src=".aoc_tiles/tiles/2022/09.png" width="161px">
+</a>
+<a href="2022/day10/check_inputs.py">
+  <img src=".aoc_tiles/tiles/2022/10.png" width="161px">
+</a>
+<a href="2022/day11/day11_.py">
+  <img src=".aoc_tiles/tiles/2022/11.png" width="161px">
+</a>
 <!-- AOC TILES END -->
