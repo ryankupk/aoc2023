@@ -1,3 +1,4 @@
+import time
 import re
 
 def parse_input(filename: str) -> tuple[list[int], list[int]]:
@@ -31,8 +32,13 @@ def part_two(times: list[int], distances_to_beat: list[int]) -> None:
 
 def main(input_filename: str):
     times, distances_to_beat = parse_input(input_filename)
+    start_part_one = time.time()
     part_one(times, distances_to_beat)
+    start_part_two = time.time()
     part_two(times, distances_to_beat)
+    end_time = time.time()
+    print(f"Part one took {start_part_two - start_part_one} seconds")
+    print(f"Part two took {end_time - start_part_two} seconds")
 
 if __name__ == "__main__":
     main("input.txt")

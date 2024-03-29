@@ -1,3 +1,4 @@
+import time
 import re
 import multiprocessing
 import functools
@@ -45,8 +46,13 @@ def part_two(seeds: list[int]) -> int:
 
 def main(input_filename: str):
     seeds = parse_input(input_filename)
+    start_part_one = time.time()
     part_one(seeds)
+    start_part_two = time.time()
     part_two(seeds)
+    end_time = time.time()
+    print(f"Part one took {start_part_two - start_part_one} seconds")
+    print(f"Part two took {end_time - start_part_two} seconds")
 
 if __name__ == "__main__":
     main("input.txt")
