@@ -53,7 +53,7 @@ Tiles below from https://github.com/LiquidFun/aoc_tiles
   <img src=".aoc_tiles/tiles/2023/15.png" width="161px">
 </a>
 <h1 align="center">
-  2022 - 22 ⭐
+  2022 - 20 ⭐
 </h1>
 <a href="2022/day1/day1_reindeer.js">
   <img src=".aoc_tiles/tiles/2022/01.png" width="161px">
