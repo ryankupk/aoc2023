@@ -5,7 +5,7 @@ Tiles below from https://github.com/LiquidFun/aoc_tiles
 
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
-  2023 - 23 ⭐
+  2023 - 21 ⭐ - Python
 </h1>
 <a href="2023/day1/day1.py">
   <img src=".aoc_tiles/tiles/2023/01.png" width="161px">
@@ -43,17 +43,8 @@ Tiles below from https://github.com/LiquidFun/aoc_tiles
 <a href="2023/day12/day12.py">
   <img src=".aoc_tiles/tiles/2023/12.png" width="161px">
 </a>
-<a href="2023/day13/day13.py">
-  <img src=".aoc_tiles/tiles/2023/13.png" width="161px">
-</a>
-<a href="None">
-  <img src=".aoc_tiles/tiles/2023/14.png" width="161px">
-</a>
-<a href="2023/day15/day15.py">
-  <img src=".aoc_tiles/tiles/2023/15.png" width="161px">
-</a>
 <h1 align="center">
-  2022 - 20 ⭐
+  2022 - 20 ⭐ - Python
 </h1>
 <a href="2022/day1/day1_reindeer.js">
   <img src=".aoc_tiles/tiles/2022/01.png" width="161px">
