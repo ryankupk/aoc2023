@@ -5,6 +5,15 @@ Tiles below from https://github.com/LiquidFun/aoc_tiles
 
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
+  Advent of Code - 43/452 ⭐
+</h1>
+<h1 align="center">
+  2024 - 2 ⭐ - Python
+</h1>
+<a href="2024/day1/day1.py">
+  <img src=".aoc_tiles/tiles/2024/01.png" width="161px">
+</a>
+<h1 align="center">
   2023 - 21 ⭐ - Python
 </h1>
 <a href="2023/day1/day1.py">
