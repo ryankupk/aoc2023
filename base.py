@@ -16,8 +16,8 @@ def main(input_filename: str):
     start_part_two = time.time()
     part_two(inp)
     end_time = time.time()
-    print(f"Part one took {start_part_two - start_part_one} seconds")
-    print(f"Part two took {end_time - start_part_two} seconds")
+    print(f"Part one took {start_part_two - start_part_one:.2f} seconds")
+    print(f"Part two took {end_time - start_part_two:.2f} seconds")
 
 if __name__ == "__main__":
     main("sample.txt")
