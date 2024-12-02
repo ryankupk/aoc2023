@@ -15,19 +15,16 @@ def part_one(strings: list[str]) -> None:
     safe = 0
     for line in strings:
         report = list(map(int, line.split(' ')))
-        cur_safe = False
+
         increasing = all([report[i+1] > report[i] for i, _ in enumerate(report[:-1])])
-        decreasing = all([report[i+1] < report[i] for i, _ in enumerate(report[:-1])])
-        if not increasing and not decreasing:
-            continue
         if increasing:
-            cur_safe = check_report(report)
+            if check_report(report):
+                safe += 1
 
-        elif decreasing:
-            cur_safe = check_report(report[::-1])
-
-        if cur_safe:
-            safe += 1
+        decreasing = all([report[i+1] < report[i] for i, _ in enumerate(report[:-1])])
+        if decreasing:
+            if check_report(report[::-1]):
+                safe += 1
 
     print(safe)
 
@@ -37,32 +34,26 @@ def part_two(strings: list[str]) -> None:
     for line in strings:
         report = list(map(int, line.split(' ')))
         reports = []
+
         for i in range(len(report)):
             cur_report = report[:i] + report[i+1:]
             reports.append(cur_report)
-        next_line = False
+
         for report in reports:
-            if next_line:
-                break
+
             increasing = all([report[i+1] > report[i] for i, _ in enumerate(report[:-1])])
-            decreasing = all([report[i+1] < report[i] for i, _ in enumerate(report[:-1])])
-            if not increasing and not decreasing:
-                continue
             if increasing:
                 cur_safe = check_report(report)
-                if not cur_safe:
-                    continue
-                else:
+                if cur_safe:
                     safe += 1
-                    next_line = True
+                    break
 
-            elif decreasing:
+            decreasing = all([report[i+1] < report[i] for i, _ in enumerate(report[:-1])])
+            if decreasing:
                 cur_safe = check_report(report[::-1])
-                if not cur_safe:
-                    continue
-                else:
+                if cur_safe:
                     safe += 1
-                    next_line = True
+                    break
 
 
     print(safe)
