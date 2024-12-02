@@ -5,31 +5,29 @@ def parse_input(filename: str) -> list[str]:
         lines = f.readlines()
         return lines
 
+def check_report(report):
+    for i, _ in enumerate(report[:-1]):
+        if report[i+1] > report[i] + 3:
+            return False
+    return True
+
 def part_one(strings: list[str]) -> None:
     safe = 0
     for line in strings:
         report = list(map(int, line.split(' ')))
-        flag = False
+        cur_safe = False
         increasing = all([report[i+1] > report[i] for i, _ in enumerate(report[:-1])])
         decreasing = all([report[i+1] < report[i] for i, _ in enumerate(report[:-1])])
         if not increasing and not decreasing:
             continue
         if increasing:
-            for i, _ in enumerate(report[:-1]):
-                if report[i+1] > report[i] + 3:
-                    flag = True
-                    break
+            cur_safe = check_report(report)
 
         elif decreasing:
-            for i, _ in enumerate(report[:-1]):
-                if report[i+1] < report[i] - 3:
-                    flag = True
-                    break
+            cur_safe = check_report(report[::-1])
 
-
-        if flag:
-            continue
-        safe += 1
+        if cur_safe:
+            safe += 1
 
     print(safe)
 
@@ -46,28 +44,21 @@ def part_two(strings: list[str]) -> None:
         for report in reports:
             if next_line:
                 break
-            flag = False
             increasing = all([report[i+1] > report[i] for i, _ in enumerate(report[:-1])])
             decreasing = all([report[i+1] < report[i] for i, _ in enumerate(report[:-1])])
             if not increasing and not decreasing:
                 continue
             if increasing:
-                for i, _ in enumerate(report[:-1]):
-                    if report[i+1] > report[i] + 3:
-                        flag = True
-                        break
-                if flag:
+                cur_safe = check_report(report)
+                if not cur_safe:
                     continue
                 else:
                     safe += 1
                     next_line = True
 
             elif decreasing:
-                for i, _ in enumerate(report[:-1]):
-                    if report[i+1] < report[i] - 3:
-                        flag = True
-                        break
-                if flag:
+                cur_safe = check_report(report[::-1])
+                if not cur_safe:
                     continue
                 else:
                     safe += 1
