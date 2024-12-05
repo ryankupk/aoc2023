@@ -2,7 +2,7 @@ import time
 from collections import defaultdict
 from functools import cmp_to_key
 
-def parse_input(filename: str): # -> dict[int,int], list[list[int]]:
+def parse_input(filename: str) -> dict[int,set[int]] | list[list[int]]:
     with open(filename) as f:
         nl_flag = False
         rules = defaultdict(set)
