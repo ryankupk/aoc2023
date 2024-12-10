@@ -4,6 +4,15 @@ def parse_input(filename: str) -> list[str]:
     with open(filename) as f:
         return f.readlines()
 
+def get_num_digits(n):
+    if n == 0:
+        return 1
+    count = 0
+    while n:
+        count += 1
+        n //= 10
+    return count
+
 def evaluate_ltr(params, operators):
     if not operators:
         return params[0]
@@ -15,7 +24,7 @@ def evaluate_ltr(params, operators):
         elif operators[i] == '+':
             result += params[i + 1]
         elif operators[i] == '||':
-            result = int(str(result) + str(params[i+1]))
+            result = result * (10 ** get_num_digits(params[i+1])) + params[i+1]
     return result
 
 def backtrack(test, params, operators):
